@@ -7,7 +7,7 @@ import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { StatusBar } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
 
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 
 import { UserData } from './providers/user-data';
 
@@ -56,10 +56,11 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.storage.create();
     this.checkLoginStatus();
     this.listenForLoginEvents();
 
-    this.swUpdate.available.subscribe(async res => {
+    this.swUpdate.versionUpdates.subscribe(async res => {
       const toast = await this.toastCtrl.create({
         message: 'Update available!',
         position: 'bottom',
